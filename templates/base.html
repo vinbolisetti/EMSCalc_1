@@ -1,0 +1,1123 @@
+
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="shortcut icon" type="image/ico" href="{% static 'OpenText/OpenText Logo/favicon.ico' %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <title>EMS Cloud | Calculator</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{% static 'https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' %}">
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="{% static 'plugins/jqvmap/jqvmap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{% static 'plugins/summernote/summernote-bs4.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-2">
+    <!-- Brand Logo -->
+    <a href="{% url 'index' %}" class="brand-link">
+      <img src="{% static 'OpenText/OpenText Logo/OpenText-Logo-INV-2017.png' %}" alt="OpenText Logo" class="img-fluid"
+           style="opacity: .8">
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{% static 'dist/img/vin.png' %}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="{% url 'index' %}" class="d-block">Vin Bolisetti</a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <a href="{% url 'index' %}" class="nav-link active">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+                <!-- <i class="right fas fa-angle-left"></i> -->
+              </p>
+            </a>
+          <li class="nav-item">
+            <a href="{% url 'addquote' %}" class="nav-link">
+              <i class="nav-icon fas fa-plus-square"></i>
+              <p>
+                Add Quote
+                <!-- <span class="right badge badge-danger">New</span> -->
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'cpscost' %}" class="nav-link">
+              <i class="nav-icon fas fa-plus-square"></i>
+              <p>
+                CPS Form
+                <!-- <span class="right badge badge-danger">New</span> -->
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'summary' %}" class="nav-link">
+              <i class="nav-icon far fa-circle"></i>
+              <p>
+                Cost Summary
+                <!-- <span class="right badge badge-danger">New</span> -->
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'drcost' %}" class="nav-link">
+              <i class="nav-icon fas fa-plus-square"></i>
+              <p>
+                DR Planning Labor Cost
+                <!-- <span class="right badge badge-danger">New</span> -->
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="{% url 'list_quote' %}" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                View Quotes
+              </p>
+            </a>
+
+          <li class="nav-item has-treeview">
+            <a href="{% url 'tables' %}" class="nav-link">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Data Tables
+              </p>
+            </a>
+
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Charts
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>ChartJS</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Flot</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-header">STATISTICS</li>
+          <li class="nav-item">
+            <a href="{% url 'tables1' %}" class="nav-link">
+              <i class="nav-icon fas fa-chart-bar"></i>
+              <p>
+                Charts
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'tables2' %}" class="nav-link">
+              <i class="nav-icon far fa-circle"></i>
+              <p>
+                Reports
+              </p>
+            </a>
+          </li>
+          <li class="nav-header">MISCELLANEOUS</li>
+          <li class="nav-item">
+            <a href="https://adminlte.io/docs/3.0" class="nav-link">
+              <i class="nav-icon fas fa-file"></i>
+              <p>Documentation</p>
+            </a>
+          </li>
+
+          <li class="nav-header">LABELS</li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-circle text-danger"></i>
+              <p class="text">Important</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-circle text-warning"></i>
+              <p>Warning</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon far fa-circle text-info"></i>
+              <p>Informational</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+
+
+{% block content %}
+
+{% endblock %}
+
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>Copyright © 2020 Open Text Corporation <a href="https://www.opentext.com/" target="_blank">OpenText</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.0.5
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static 'plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- ChartJS -->
+<script src="{% static 'plugins/chart.js/Chart.min.js' %}"></script>
+<!-- Sparkline -->
+<script src="{% static 'plugins/sparklines/sparkline.js' %}"></script>
+<!-- JQVMap -->
+<script src="{% static 'plugins/jqvmap/jquery.vmap.min.js' %}"></script>
+<script src="{% static 'plugins/jqvmap/maps/jquery.vmap.usa.js' %}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{% static 'plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+<!-- daterangepicker -->
+<script src="{% static 'plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'plugins/daterangepicker/daterangepicker.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- Summernote -->
+<script src="{% static 'plugins/summernote/summernote-bs4.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dist/js/adminlte.js' %}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static 'dist/js/pages/dashboard.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dist/js/demo.js' %}"></script>
+
+<!-- Datatables -->
+    <script src="{% static 'vendors/datatables.net/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-buttons/js/dataTables.buttons.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-buttons/js/buttons.flash.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-buttons/js/buttons.html5.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-buttons/js/buttons.print.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-keytable/js/dataTables.keyTable.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-responsive/js/dataTables.responsive.min.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js' %}"></script>
+    <script src="{% static 'vendors/datatables.net-scroller/js/dataTables.scroller.min.js' %}"></script>
+    <script src="{% static 'vendors/jszip/dist/jszip.min.js' %}"></script>
+    <script src="{% static 'vendors/pdfmake/build/pdfmake.min.js' %}"></script>
+    <script src="{% static 'vendors/pdfmake/build/vfs_fonts.js' %}"></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+
+<script>
+  $(function () {
+    $('#myDataTable1').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : true,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+</script>
+
+<script>
+    $("#id_hostingProvider").change(function () {
+        const url = $("#quoteinput").attr("data-location-url");
+        const hostingProviderId = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'hostingProvider_id': hostingProviderId
+            },
+            success: function (data) {
+                $("#id_location").html(data);
+
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (location) {
+                    html_data += `<option value="${location.id}">${location.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_location").html(html_data);
+
+            }
+        });
+
+    });
+</script>
+
+
+    <!-- Location -->
+    <!--<script>
+
+        $(document).ready(function(){
+
+            $('#id_location').empty();
+
+            var otStrings = JSON.parse('{{ json_ot_strings | escapejs }}');
+            var auStrings = JSON.parse('{{ json_au_strings | escapejs }}');
+            var azStrings = JSON.parse('{{ json_az_strings | escapejs }}');
+            var caStrings = JSON.parse('{{ json_ca_strings | escapejs }}');
+            var gcpStrings = JSON.parse('{{ json_gcp_strings | escapejs }}');
+            var awStrings = JSON.parse('{{ json_aw_strings | escapejs }}');
+            var cuStrings = JSON.parse('{{ json_cu_strings | escapejs }}');
+
+            $('#id_hostingProvider').on('change', function(){
+
+                var hostingProvider = $('#id_hostingProvider').val();
+
+                if(hostingProvider == 'OpenText'){
+
+                    $('#id_location').empty();
+
+                    var length = otStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = otStrings[i];
+                        $('#id_location').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(hostingProvider == 'OpenText Australia'){
+
+                    $('#id_location').empty();
+
+                    var length = auStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = auStrings[i];
+                        $('#id_location').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(hostingProvider == 'OpenText Canada'){
+
+                    $('#id_location').empty();
+
+                    var length = caStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = caStrings[i];
+                        $('#id_location').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(hostingProvider == 'GCP'){
+
+                    $('#id_location').empty();
+
+                    var length = gcpStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = gcpStrings[i];
+                        $('#id_location').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(hostingProvider == 'Azure'){
+
+                    $('#id_location').empty();
+
+                    var length = azStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = azStrings[i];
+                        $('#id_location').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(hostingProvider == 'AWS'){
+
+                    $('#id_location').empty();
+
+                    var length = awStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = awStrings[i];
+                        $('#id_location').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(hostingProvider == 'Customer'){
+
+                    $('#id_location').empty();
+
+                    var length = cuStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = cuStrings[i];
+                        $('#id_location').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else{
+
+                    $('#id_location').empty();
+
+                }
+
+            });
+
+        });
+    </script>-->
+    <!-- End of Location -->
+
+    <!-- Mutliple active regions? -->
+    <!--<script>
+        $(document).ready(function(){
+
+            $('#id_multipleActiveRegions').empty();
+
+            var multiStrings = JSON.parse('{{ json_multi_strings | escapejs }}');
+
+            $('#id_hostingProvider').on('change', function(){
+
+                var hostingProvider = $('#id_hostingProvider').val();
+
+                if(hostingProvider == 'GCP'){
+
+                    $('#id_multipleActiveRegions').empty();
+
+                    var length = multiStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = multiStrings[i];
+                        $('#id_multipleActiveRegions').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else{
+
+                    $('#id_multipleActiveRegions').empty();
+
+                }
+
+            });
+
+        });
+    </script>-->
+    <!-- End of Mutliple active regions? -->
+
+   <!-- Disaster Recovery? --> <!-- Disaster Recovery? --> <!-- Disaster Recovery? -->
+
+    <!-- Location for OpenText US EMEA JAPAN -->
+    <!--<script>
+        $(document).ready(function(){
+
+            $('#id_disasterRecovery').empty();
+
+            var usemeaStrings = JSON.parse('{{ json_usemea_strings | escapejs }}');
+            var japanStrings = JSON.parse('{{ json_japan_strings | escapejs }}');
+            var sydneyStrings = JSON.parse('{{ json_sydney_strings | escapejs }}');
+            var canadaStrings = JSON.parse('{{ json_canada_strings | escapejs }}');
+
+            var gcpusStrings = JSON.parse('{{ json_gcpus_strings | escapejs }}');
+            var gcpnaneStrings = JSON.parse('{{ json_gcpnane_strings | escapejs }}');
+            var gcpeuropeStrings = JSON.parse('{{ json_gcpeurope_strings | escapejs }}');
+            var gcpaustraliaStrings = JSON.parse('{{ json_gcpaustralia_strings | escapejs }}');
+            var gcpasiaStrings = JSON.parse('{{ json_gcpasia_strings | escapejs }}');
+            var gcpasiaeastStrings = JSON.parse('{{ json_gcpasiaeast_strings | escapejs }}');
+            var gcpasianeStrings = JSON.parse('{{ json_gcpasiane_strings | escapejs }}');
+            var gcpbrazilStrings = JSON.parse('{{ json_gcpbrazil_strings | escapejs }}');
+
+            var awsallStrings = JSON.parse('{{ json_awsall_strings | escapejs }}');
+
+
+
+            $('#id_location').on('change', function(){
+
+                var location = $('#id_location').val();
+
+                if(location == 'OT - US Twins'){
+
+                    $('#id_disasterRecovery').empty();
+
+                    var length = usemeaStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = usemeaStrings[i];
+                        $('#id_disasterRecovery').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(location == 'OT - EMEA Twins'){
+
+                    $('#id_disasterRecovery').empty();
+
+                    var length = usemeaStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = usemeaStrings[i];
+                        $('#id_disasterRecovery').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(location == 'OT - Japan Twins'){
+
+                    $('#id_disasterRecovery').empty();
+
+                    var length = japanStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = japanStrings[i];
+                        $('#id_disasterRecovery').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(location == 'OT - Sydney'){
+
+                    $('#id_disasterRecovery').empty();
+
+                    var length = sydneyStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = sydneyStrings[i];
+                        $('#id_disasterRecovery').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(location == 'OT - Toronto'){
+
+                    $('#id_disasterRecovery').empty();
+
+                    var length = canadaStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = canadaStrings[i];
+                        $('#id_disasterRecovery').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(location == 'GCP - US'){
+
+                    $('#id_disasterRecovery').empty();
+
+                    var length = gcpusStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = gcpusStrings[i];
+                        $('#id_disasterRecovery').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(location == 'GCP - NA-NE'){
+
+                    $('#id_disasterRecovery').empty();
+
+                    var length = gcpnaneStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = gcpnaneStrings[i];
+                        $('#id_disasterRecovery').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(location == 'GCP - Europe'){
+
+                    $('#id_disasterRecovery').empty();
+
+                    var length = gcpeuropeStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = gcpeuropeStrings[i];
+                        $('#id_disasterRecovery').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(location == 'GCP - Australia'){
+
+                    $('#id_disasterRecovery').empty();
+
+                    var length = gcpaustraliaStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = gcpaustraliaStrings[i];
+                        $('#id_disasterRecovery').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(location == 'GCP - Asia'){
+
+                    $('#id_disasterRecovery').empty();
+
+                    var length = gcpasiaStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = gcpasiaStrings[i];
+                        $('#id_disasterRecovery').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(location == 'GCP - Asia-East'){
+
+                    $('#id_disasterRecovery').empty();
+
+                    var length = gcpasiaeastStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = gcpasiaeastStrings[i];
+                        $('#id_disasterRecovery').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(location == 'GCP - Asia-NE'){
+
+                    $('#id_disasterRecovery').empty();
+
+                    var length = gcpasianeStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = gcpasianeStrings[i];
+                        $('#id_disasterRecovery').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(location == 'GCP - Brazil'){
+
+                    $('#id_disasterRecovery').empty();
+
+                    var length = gcpbrazilStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = gcpbrazilStrings[i];
+                        $('#id_disasterRecovery').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(location == 'US East (N.Virginia)' || location == 'US East (Ohio)' || location == 'US West (Oregon)' || location == 'US West (N. Calif.)' || location == 'Africa (Cape Town)' || location == 'Asia Pacific (Hong Kong)' || location == 'Asia Pacific (Mumbai)' || location == 'Asia Pacific (Osaka-Local)' || location == 'Asia Pacific (Seoul)' || location == 'Asia Pacific (Singapore)' || location == 'Asia Pacific (Sydney)' || location == 'Asia Pacific (Tokyo)' || location == 'Canada (Central)' || location == 'Europe (Frankfurt)' || location == 'Europe (Ireland)' || location == 'Europe (London)' || location == 'Europe (Milan)' || location == 'Europe (Paris)' || location == 'Europe (Stockholm)' || location == 'Middle East (Bahrain)' || location == 'South America (Sao Paulo)' || location == 'AWS GovCloud (US-East)' || location == 'AWS GovCloud (US-West)'){
+
+                    $('#id_disasterRecovery').empty();
+
+                    var length = awsallStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = awsallStrings[i];
+                        $('#id_disasterRecovery').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else{
+
+                    $('#id_disasterRecovery').empty();
+
+                }
+
+            });
+
+        });
+    </script>-->
+    <!-- End of Location for OpenText US EMEA JAPAN -->
+
+    <!-- enhanced DR Planning hrs pcm -->
+    <!-- <script>
+        $(document).ready(function(){
+
+            $('#id_enhancedDRPlanningHrsPcm').empty();
+
+        var drhrsStrings = JSON.parse('{{ json_drhrs_strings | escapejs }}');
+
+            $('#id_disasterRecovery').on('change', function(){
+
+                var disasterRecovery = $('#id_disasterRecovery').val();
+
+                if(disasterRecovery == 'OT - EDR via Twin DCs' || disasterRecovery == 'OT DC with GCP for EDR'){
+
+                    $('#id_enhancedDRPlanningHrsPcm').empty();
+
+                    var length = drhrsStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = drhrsStrings[i];
+                        $('#id_enhancedDRPlanningHrsPcm').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else{
+
+                    $('#id_enhancedDRPlanningHrsPcm').empty();
+
+                }
+
+            });
+
+        });
+    </script> -->
+
+    <!--<script>
+        $(document).ready(function(){
+
+            $('#id_customerRequestedRTORPOSLA').empty();
+
+        var drsla1Strings = JSON.parse('{{ json_drsla1_strings | escapejs }}');
+        var drsla2Strings = JSON.parse('{{ json_drsla2_strings | escapejs }}');
+        var drsla3Strings = JSON.parse('{{ json_drsla3_strings | escapejs }}');
+
+            $('#id_disasterRecovery').on('change', function(){
+
+                var disasterRecovery = $('#id_disasterRecovery').val();
+
+                if(disasterRecovery == 'OT - Standard'){
+
+                    $('#id_customerRequestedRTORPOSLA').empty();
+
+                    var length = drsla1Strings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = drsla1Strings[i];
+                        $('#id_customerRequestedRTORPOSLA').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(disasterRecovery == 'OT - Standard' || disasterRecovery == 'OT - EDR via Twin DCs' || disasterRecovery == 'OT DC with GCP for EDR' || disasterRecovery == 'GCP Multi-region EDR (geographic separation)' || disasterRecovery == 'Azure Multi-region EDR (geographic separation)' || disasterRecovery == 'AWS Multi-region EDR (geographic separation)'){
+
+                    $('#id_customerRequestedRTORPOSLA').empty();
+
+                    var length = drsla2Strings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = drsla2Strings[i];
+                        $('#id_customerRequestedRTORPOSLA').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else if(disasterRecovery == 'GCP Single-region Multi-Zone DR' || disasterRecovery == 'Azure Single-region Multi-Zone DR' || disasterRecovery == 'AWS Single-region Multi-Zone DR'){
+
+                    $('#id_customerRequestedRTORPOSLA').empty();
+
+                    var length = drsla3Strings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = drsla3Strings[i];
+                        $('#id_customerRequestedRTORPOSLA').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else{
+
+                    $('#id_customerRequestedRTORPOSLA').empty();
+
+                }
+
+            });
+
+        });
+    </script>-->
+
+    <!-- encryptionAtRest -->
+    <!-- <script>
+        $(document).ready(function(){
+
+            $('#id_encryptionAtRest').empty();
+
+        var encatrestStrings = JSON.parse('{{ json_encatrest_strings | escapejs }}');
+
+            $('#id_location').on('change', function(){
+
+                var location = $('#id_location').val();
+
+                if(location == 'OT - Toronto'){
+
+                    $('#id_encryptionAtRest').empty();
+
+                    var length = encatrestStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = encatrestStrings[i];
+                        $('#id_encryptionAtRest').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else{
+
+                    $('#id_encryptionAtRest').empty();
+
+                }
+
+            });
+
+        });
+    </script>  -->
+
+    <!-- Number of site-to-site VPNs -->
+   <!-- <script>
+        $(document).ready(function(){
+
+            $('#id_numberOfSiteToSiteVPNs').empty();
+
+        var s2svpnsStrings = JSON.parse('{{ json_s2svpns_strings | escapejs }}');
+
+            $('#id_changeRequestOrAddOnOnly').on('change', function(){
+
+                var changeRequestOrAddOnOnly = $('#id_changeRequestOrAddOnOnly').val();
+
+                if(changeRequestOrAddOnOnly == 'Yes'){
+
+                    $('#id_numberOfSiteToSiteVPNs').empty();
+
+                    var length = s2svpnsStrings.length;
+                    var i;
+                    for(i=0; i < length; i++){
+
+                        job = s2svpnsStrings[i];
+                        $('#id_numberOfSiteToSiteVPNs').append(
+
+                            `
+                            <option value="${job}">
+                                ${job}
+                            </option>
+                            `
+
+                        );
+
+                    }
+
+                }
+                else{
+
+                    $('#id_numberOfSiteToSiteVPNs').empty();
+
+                }
+
+            });
+
+        });
+    </script> -->
+
+
+
+</body>
+</html>

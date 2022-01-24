@@ -1,0 +1,402 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load widget_tweaks %}
+<style>
+
+    div {
+    color: #4a4a56;
+    font-size:11px;
+    font-weight: bold;
+
+    }
+
+
+    #sfdcload {
+        border-radius: 8px;
+        transition-duration: 0.4s;
+        padding: 1.5px 20px;
+        background-color: #008CBA;
+        color: white;
+        display: inline-block;
+    }
+
+    #sfdcload:hover {
+          background-color: #4CAF50; /* Green */
+          color: white;
+    }
+
+    #backgr {
+    background-color: rgb(252, 243, 207);
+    }
+
+     label {
+        float: left;
+        width: 200px;
+        padding-right: 24px;
+        }
+
+
+    input[type=text], select, textarea  {
+      width: 60%;
+      padding: 1.5px 8px;
+      border: 1px solid black;
+      margin: 4px 0;
+      box-sizing: border-box;
+    }
+    input[type=url]{
+      width: 60%;
+      padding: 1.5px 8px;
+      border: 1px solid black;
+      margin: 4px 0;
+
+    }
+
+    #notesStyle {
+    font-size:11px;
+    color:#218F8F;
+    }
+
+    #info_pop {
+    background-color: #008CBA;
+    font-size: 10px;
+    padding: 2px 4px;
+    border-radius: 8px;
+    border: 0px solid green;
+    }
+
+</style>
+
+
+
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2> New Quote </h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Add Quote</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Cost Calculation</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Summary</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+
+                      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+              <!-- Inputs Panel -->
+            <div class="x_panel">
+              <div class="x_title">
+                <h2>Inputs <small></small></h2>
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <br />
+                                <!-- Form starts here-->
+                <form action="#" id="quoteinput" data-location-url="{% url 'ajax_load_location' %}" class="form-horizontal form-label-left" method='POST'> {% csrf_token %}
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Quote Name</label>
+                        <div class="col-sm-4">
+                            {% render_field form.quoteName placeholder='Provide a New Quote Name' %}<br></div>
+                        <label class="col-sm-2 col-form-label">Opportunity ID</label>
+                        <div class="col-sm-4">
+                            {% render_field form.salesForceCloudOpportunityID placeholder='Paste and Load' %}<input id="sfdcload" type="submit" value="Load"><br></div>
+                        <label class="col-sm-2 col-form-label">Customer Name</label>
+                        <div class="col-sm-4">
+                            {% render_field form.customerName placeholder='Enter Account Name' %}<br></div>
+                        <label class="col-sm-2 col-form-label">Cloud Opportunity URL</label>
+                        <div class="col-sm-4">
+                            {% render_field form.cloudOpportunityURL placeholder='paste SFDC url' %}<br></div>
+                        <label class="col-sm-2 col-form-label">Cloud Desk Specialist</label>
+                        <div class="col-sm-4">
+                            {% render_field form.cloudDeskSpecialist %}<br></div>
+                        <label class="col-sm-2 col-form-label">Cloud Opportunity type</label>
+                        <div class="col-sm-4">
+                            {% render_field form.cloudOpportunityType %}<br></div>
+                        <label class="col-sm-2 col-form-label">Leading Product</label>
+                        <div class="col-sm-4">
+                            {% render_field form.leadingProduct %}<br></div>
+                        <label class="col-sm-2 col-form-label">Non-standard terms or penalties?</label>
+                        <div class="col-sm-4">
+                            {% render_field form.nonStandardTermsOrPenalties %}<br>
+                            <textarea class="form-control z-depth-1" id="exampleFormControlTextarea1" rows="3" placeholder="Please indicate Non-standard terms or penalties, if any..."></textarea><br></div>
+                        <label class="col-sm-2 col-form-label">Has the Enterprise Cloud Managed Services been excluded by a CDS rep? if so, who? <span class="badge badge-info" onclick="javascript:alert('Select if Enterprise Cloud Managed Services been excluded');">Info</span></label>
+                        <div class="col-sm-4">
+                            {% render_field form.hasTheEnterpriseCloudManagedServicesBeenExcludedByaCDSRep %}<br></div>
+                        <label class="col-sm-2 col-form-label">CDS Rep</label>
+                        <div class="col-sm-4">
+                            {% render_field form.managedServicesRep %}<br>
+                            <textarea class="form-control z-depth-1" rows="3" placeholder="Why is Cloud Managed Services been excluded?"></textarea><br></div>
+                        <label class="col-sm-2 col-form-label">Local Currency</label>
+                        <div class="col-sm-4">
+                            {% render_field form.localCurrency %}</div><br>
+                        <label class="col-sm-2 col-form-label">Require timeline based changes?</label>
+                        <div class="col-sm-4">
+                            {% render_field form.requireTimelineBasedChanges %}</div><br>
+                        <label class="col-sm-2 col-form-label">In region NA/EMEA personnel only?</label>
+                        <div class="col-sm-4">
+                            {% render_field form.inRegionNAEMEAPersonnelOnly %}</div><br>
+                        <label class="col-sm-2 col-form-label">Change Request or Addon only?</label>
+                        <div class="col-sm-4">
+                            {% render_field form.changeRequestOrAddOnOnly %}</div><br>
+                        <label class="col-sm-2 col-form-label">If CR/Addon & GCP, already provisioned NetApp CVO?</label>
+                        <div class="col-sm-4">
+                            {% render_field form.ifCRAddOnGCPAlreadyProvisionedNetAppCVO %}</div><br>
+                        <label class="col-sm-2 col-form-label">Cloud Term (months)</label>
+                        <div class="col-sm-4">
+                            {% render_field form.cloudTermMonths id="backgr" %} </div><br>
+                        <label class="col-sm-2 col-form-label">Subscription Software OT Direct Discount (%)</label>
+                        <div class="col-sm-4">
+                            {% render_field form.subscriptionSoftwareOTDirectDiscount id="backgr"%}</div>
+
+                        <label class="col-sm-2 col-form-label">Subscription Software Third Party Discount (%)</label>
+                        <div class="col-sm-4">
+                            {% render_field form.subscriptionSoftwareThirdPartyDiscount id="backgr"%}</div>
+
+                        <label class="col-sm-2 col-form-label">Perpetual Software OT Direct Discount (%)</label>
+                        <div class="col-sm-4" >
+                            {% render_field form.perpetualSoftwareOTDirectDiscount id="backgr" %}</div>
+
+                        <label class="col-sm-2 col-form-label">Perpetual Software Third Party Discount (%)</label>
+                        <div class="col-sm-4">
+                            {% render_field form.perpetualSoftwareThirdPartyDiscount id="backgr"%}</div><br><br><br>
+
+                        <label class="col-sm-2 col-form-label">CPS Cost rate (USD / hr)</label>
+                        <div class="col-sm-4">
+                            {% render_field form.CPSCostRateUSDhr id="backgr"%}</div><br><br><br>
+
+                        <label class="col-sm-2 col-form-label">CDM Cost rate (USD / hr)</label>
+                        <div class="col-sm-4">
+                            {% render_field form.CDMCostRateUSDhr id="backgr"%}</div><br><br><br>
+
+                        <label class="col-sm-2 col-form-label">DR planning labor cost rate (USD / hr)</label>
+                        <div class="col-sm-4">
+                            {% render_field form.DRPlanningLaborCostRateUSDhr id="backgr"%}</div><br><br><br>
+
+                        <label class="col-sm-2 col-form-label">Cloud Margin</label>
+                        <div class="col-sm-4">
+                            {% render_field form.cloudMargin id="backgr"%}</div><br><br><br>
+
+                        <label class="col-sm-2 col-form-label">Annual Price Adjustment</label>
+                        <div class="col-sm-4">
+                            {% render_field form.annualPriceAdjustment id="backgr"%}</div><br><br><br>
+
+                        <label class="col-sm-2 col-form-label">Incremental ECMS Headcount required as part of the ECMS?</label>
+                        <div class="col-sm-4">
+                            {% render_field form.incrementalECMSHeadcountRequiredAsPartOfTheECMS %}</div><br>
+
+                        <label class="col-sm-2 col-form-label">CPS Monthly Hours</label>
+                        <div class="col-sm-4">
+                            {% render_field form.CPSMonthlyHours %}</div><br>
+
+                        <label class="col-sm-2 col-form-label">CDM Monthly Hours</label>
+                        <div class="col-sm-4">
+                            {% render_field form.CDSMonthlyHours %}</div><br>
+
+                        <label class="col-sm-2 col-form-label">Manual Installation Cost</label>
+                        <div class="col-sm-4">
+                            {% render_field form.manualInstallationCost %}</div><br>
+
+                        <label class="col-sm-2 col-form-label">End of first year users (% of total)</label>
+                        <div class="col-sm-4">
+                            {% render_field form.endOfFirstYearUsersOfTotal %}</div><br>
+
+                        <label class="col-sm-2 col-form-label">Annual users increase (% of total)</label>
+                        <div class="col-sm-4">
+                            {% render_field form.annualUsersIncreaseOfTotal %}</div><br>
+
+                        <label class="col-sm-2 col-form-label">Total users over term (#)</label>
+                        <div class="col-sm-4">
+                            {% render_field form.totalUsersOverTerm %}</div><br>
+
+                        <label class="col-sm-2 col-form-label">Remove amortized 10k USD fee @ 100% margin?</label>
+                        <div class="col-sm-4">
+                            {% render_field form.removeAmortized10kUSDFee100Margin %}</div><br>
+
+                        <!-- Hosting Form -->
+                        <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Hosting Provider</label>
+                        <div class="col-sm-4">
+                            {% render_field form.hostingProvider %}<br></div>
+                        <label class="col-sm-2 col-form-label">Location</label>
+                        <div class="col-sm-4">
+                            {% render_field form.location %}<br></div>
+                        <label class="col-sm-2 col-form-label">Mutliple active regions?</label>
+                        <div class="col-sm-4">
+                            {% render_field form.multipleActiveRegions %}<br></div>
+                        <label class="col-sm-2 col-form-label">Customer requested - Primary DC</label>
+                        <div class="col-sm-4">
+                            {% render_field form.customerRequestedPrimaryDC %}<br></div>
+                        <label class="col-sm-2 col-form-label">Customer Requested - Secondary or more DC(s)</label>
+                        <div class="col-sm-4">
+                            {% render_field form.customerRequestedSecondaryOrMoreDCs %}<br></div>
+
+                        <label class="col-sm-2 col-form-label">Explanation of multiple active regions</label>
+                        <div class="col-sm-4">
+                            {% render_field form.explanationOfMultipleActiveRegions %}<br></div>
+
+                        <label class="col-sm-2 col-form-label">Customer Requested - Application Availablity SLA</label>
+                        <div class="col-sm-4">
+                            {% render_field form.customerRequestedApplicationAvailabilitySLA %}<br></div>
+
+                        <label class="col-sm-2 col-form-label">Disaster Recovery?</label>
+                        <div class="col-sm-4">
+                            {% render_field form.disasterRecovery %}<br></div>
+
+                        <label class="col-sm-2 col-form-label">Customer Requested - RTO/RPO SLA
+
+                            <!-- Button trigger modal -->
+<button id="info_pop" class="badge badge-info" type="button" data-toggle="modal" data-target="#exampleModalCenter">Info</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Customer Requested - RTO/RPO SLA</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">Select appropriate SLA or type directly (you must gain approval from Pat Ryan for anything lower than 8hrs/8hrs; this approval email must be stored with the docs for A&A approval). If using Sas storage on OpenText, please note that you must contact Cloud Delivery Ops (Pat Ryan) to confirm the SLA. If the SLA required is not within the drop-down, then you must gain approval from Cloud Delivery Ops.</div>
+            <div class="modal-footer"><button class="btn btn-primary" type="button" data-dismiss="modal">Close</button></div>
+        </div>
+    </div>
+</div></label>
+                        <div class="col-sm-4">
+                            {% render_field form.customerRequestedRTORPOSLA %}<br></div>
+
+                        <label class="col-sm-2 col-form-label">Enhanced DR planning hrs pcm</label>
+                        <div class="col-sm-4">
+                            {% render_field form.enhancedDRPlanningHrsPcm %}<br></div>
+
+                        <label class="col-sm-2 col-form-label">Is this a DaaS based cloud service?</label>
+                        <div class="col-sm-4">
+                            {% render_field form.isThisADaaSBasedCloudService %}</div><br>
+
+                        <label class="col-sm-2 col-form-label">Requires EU Data Protection Zone (EU-DPZ)?</label>
+                        <div class="col-sm-4">
+                            {% render_field form.requiresEUDataProtectionZoneEUDPZ %}</div><br>
+
+                        <label class="col-sm-2 col-form-label">Backup non-production environments</label>
+                        <div class="col-sm-4">
+                            {% render_field form.backupNonProductionEnvironments %}</div><br>
+                        <label class="col-sm-2 col-form-label">Encryption-at-rest?</label>
+                        <div class="col-sm-4">
+                            {% render_field form.encryptionAtRest %}</div><br>
+
+                        <label class="col-sm-2 col-form-label">Number of site-to-site VPNs</label>
+                        <div class="col-sm-4">
+                            {% render_field form.numberOfSiteToSiteVPNs %}</div><br>
+
+                        <label class="col-sm-2 col-form-label">Number of client-based VPNs</label>
+                        <div class="col-sm-4">
+                            {% render_field form.numberOfClientBasedVPNs %} </div><br>
+
+                        <label class="col-sm-2 col-form-label">Will the customer use MPLS/VPLS circuits to connect?</label>
+                        <div class="col-sm-4">
+                            {% render_field form.willTheCustomerUseMPLSVPLSCircuitsToConnect %}</div>
+
+                        <label class="col-sm-2 col-form-label"># GCP Sole Tenant Nodes (vCPUs: 96, RAM: 624GB per STN)</label>
+                        <div class="col-sm-4">
+                            {% render_field form.GCPSoleTenantNodesVCPUs96RAM624GBPerSTN %}</div>
+
+                        <label class="col-sm-2 col-form-label">Additional Cloud Delivery Ops Costs (pcm) USD</label>
+                        <div class="col-sm-4" >
+                            {% render_field form.additionalCloudDeliveryOpsCostsPcmUSD %}</div>
+
+                        <label class="col-sm-2 col-form-label">Additional Cloud Delivery Ops Costs (one-time) USD</label>
+                        <div class="col-sm-4">
+                            {% render_field form.additionalCloudDeliveryOpsCostsOneTimeUSD %}</div><br><br><br>
+
+                        <label class="col-sm-2 col-form-label">Third party Azure remote access?</label>
+                        <div class="col-sm-4">
+                            {% render_field form.thirdPartyAzureRemoteAccess %}</div><br><br><br>
+
+                        <label class="col-sm-2 col-form-label">OS Patching</label>
+                        <div class="col-sm-4">
+                            {% render_field form.OSPatching %}</div><br><br><br>
+
+                        <label class="col-sm-2 col-form-label">Threat Management and Security Scans</label>
+                        <div class="col-sm-4">
+                            {% render_field form.threatManagementAndSecurityScans %}</div><br><br><br>
+
+                        <label class="col-sm-2 col-form-label">Problem Escalation and Response</label>
+                        <div class="col-sm-4">
+                            {% render_field form.problemEscalationAndResponse %}</div><br><br><br>
+
+                        <label class="col-sm-2 col-form-label">Load Balancing</label>
+                        <div class="col-sm-4">
+                            {% render_field form.loadBalancing %}</div><br><br><br>
+
+                        <label class="col-sm-2 col-form-label">Firewall</label>
+                        <div class="col-sm-4">
+                            {% render_field form.firewall %}</div><br>
+
+                        <label class="col-sm-2 col-form-label">Database Administration and Tuning</label>
+                        <div class="col-sm-4">
+                            {% render_field form.databaseAdministrationAndTuning %}</div><br>
+
+                        <label class="col-sm-2 col-form-label">Active-Active DB required</label>
+                        <div class="col-sm-4">
+                            {% render_field form.activeActiveDBRequired %}</div><br>
+
+                        <label class="col-sm-2 col-form-label">Application monitoring required (New Relic)?</label>
+                        <div class="col-sm-4">
+                            {% render_field form.applicationMonitoringRequiredNewRelic %}</div><br>
+
+                         <div class="col-sm-10">
+                        <input class="btn btn-success" type="submit" value="Save">
+                        </div>
+                    </div>
+                        <!-- End of Hosting Form -->
+
+                    </div>
+                </form>
+                               <!-- Form ends here -->
+              </div>
+            </div>
+              <!-- End of Inputs Panel -->
+
+              <!-- Hosting Panel -->
+
+              <!-- End of Hosting Panel -->
+
+                        </div>
+                      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <!-- Detail view starts here -->
+                          <div class="card-body">
+                                <h3> This page is under construction
+                                    Opportunity ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ object.Opportunity_ID }} <br>
+                                        Opportunity Name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ object.customer_name }} <br>
+                                        Could Desk Lead:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ object.lead_name }}</h3><br>
+                          </div>
+                          <!-- Detail view ends here -->
+                      </div>
+                      <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        <h1>This tab is Under Construction</h1>
+                      </div>
+                    </div>
+
+                </div>
+              </div>
+
+
+</div>
+    </section></div></div></body>
+
+
+{% endblock %}
+

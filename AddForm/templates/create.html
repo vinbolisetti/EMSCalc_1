@@ -1,0 +1,25 @@
+
+{% load static %}
+{% block style %}
+<style>
+label{
+	width:110px;
+}
+input[type=text], select, input[type=number]{
+	width:55%;
+}
+</style> {% endblock %}
+<title>Add/Edit Company Popup | Croma</title>
+
+<div class = "container">
+	<div class = "col-md-12">
+		<h1>{{title}}</h1><br>
+		<form method = 'POST' action= '' enctype = "multipart/form-data" novalidate id = "unit-form">
+			{% csrf_token %}
+			{{ form1.as_p }}
+			<input type = "submit" class = "btn btn-primary" value = "Submit">
+			<br><br>
+		</form>
+	</div>
+</div>
+
